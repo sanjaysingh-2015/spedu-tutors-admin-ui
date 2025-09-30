@@ -5,6 +5,8 @@ export const login = async (email, password) => {
   const token = res.data.accessToken
   localStorage.setItem('spedu_token', token)
   localStorage.setItem('loggedInUser', res.data.name)
+  localStorage.setItem('userRole', res.data.role)
+  localStorage.setItem('loginAt', res.data.loginAt)
   return res.data
 }
 

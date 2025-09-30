@@ -18,7 +18,14 @@ import {
 
 export default function NavBar() {
   const token = localStorage.getItem("spedu_token");
+  const userRole = localStorage.getItem("userRole");
+  const loginAt = localStorage.getItem("loginAt");
   const loggedInUser = localStorage.getItem("loggedInUser");
+  const initials = loggedInUser
+          .split(" ")
+          .map(word => word[0].toUpperCase())
+          .slice(0, 2)
+          .join("");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -109,6 +116,14 @@ export default function NavBar() {
             </Link>
             </div>
           </div>
+          <div className="px-4 py-4 bg-white border-l border-b border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-100 shadow-[-4px_4px_6px_rgba(0,0,0,0.1)]">
+            <div className="flex space-x-6 justify-center">
+                <button onClick={handleLogout }className="flex flex-col items-center justify-center px-2 text-sm text-red-600 hover:text-red-800">
+                  <ArrowRightOnRectangleIcon className="w-5 h-5" />
+                  <span>Logout</span>
+                </button>
+            </div>
+          </div>
           </>
         )}
       </div>
@@ -117,16 +132,12 @@ export default function NavBar() {
       <div>
         {!isLoginPage && token ? (
           <div className="flex flex-col items-center space-y-1">
-            <span className="font-medium text-gray-700 text-center">
-              {loggedInUser}
+            <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold text-sm">
+              {initials}
             </span>
-            <button
-              onClick={handleLogout}
-              className={`${commonBtn} text-red-600 hover:text-red-800`}
-            >
-              <ArrowRightOnRectangleIcon className="w-5 h-5" />
-              <span>Logout</span>
-            </button>
+            <span className="text-[0.9rem] text-blue-700 text-center">{loggedInUser}</span>
+            <span className="text-[0.7rem] text-orange-800 text-center"> As {userRole}</span>
+            <span className="text-[0.5rem] text-green-800 text-center">Logged in at: {loginAt}</span>
           </div>
         ) : !isLoginPage && (
           <Link

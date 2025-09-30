@@ -1,19 +1,147 @@
-import React, { useEffect, useState } from 'react'
-import { getDashboard } from '../services/adminService'
+import { useState } from "react";
 
-export default function Dashboard(){
-  const [data, setData] = useState(null)
-  useEffect(()=>{ getDashboard().then(r=>setData(r.data)).catch(()=>{}) }, [])
-  if(!data) return <div className="card">Loading dashboard...</div>
+export default function Dashboard() {
+  const [view, setView] = useState("weekly");
+
+  // Example mock data (replace with API calls later)
+  const stats = {
+    today: {
+      tutors: 2,
+      students: 20,
+      sessions: 45,
+      revenue: "₹15,000",
+    },
+    weekly: {
+      tutors: 15,
+      students: 120,
+      sessions: 85,
+      revenue: "₹45,000",
+    },
+    monthly: {
+      tutors: 45,
+      students: 450,
+      sessions: 360,
+      revenue: "₹1,80,000",
+    },
+    yearly: {
+      tutors: 236,
+      students: 4378,
+      sessions: 4582,
+      revenue: "₹14,80,697",
+    },
+  };
+
+  const data = stats[view];
+
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-4">Dashboard</h2>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="card">Total Tutors: <b>{data.totalTutors}</b></div>
-        <div className="card">Total Students: <b>{data.totalStudents}</b></div>
-        <div className="card">Total Classes: <b>{data.totalClasses}</b></div>
-        <div className="card">Total Revenue: <b>{data.totalRevenue}</b></div>
+    <div className="p-6 space-y-8">
+      {/* Header with toggle */}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold text-gray-800">📊 Dashboard</h2>
+
+        {/* Toggle */}
+        <div className="flex bg-gray-200 rounded-full overflow-hidden">
+          {["today", "weekly", "monthly", "yearly"].map((option) => (
+            <button
+              key={option}
+              onClick={() => setView(option)}
+              className={`px-4 py-2 text-sm font-medium capitalize ${
+                view === option
+                  ? "bg-blue-600 text-white"
+                  : "text-gray-700 hover:bg-gray-300"
+              }`}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Row 1: Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <Card title="Tutors" value={data.tutors} color="bg-indigo-500" />
+        <Card title="Students" value={data.students} color="bg-green-500" />
+        <Card title="Sessions" value={data.sessions} color="bg-purple-500" />
+        <Card title="Revenue" value={data.revenue} color="bg-yellow-500" />
+      </div>
+
+      {/* Row 2: Charts */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <h3 className="text-lg font-semibold mb-4">📈 Sessions & Revenue Trend</h3>
+          <div className="h-64 flex items-center justify-center text-gray-400">
+            {/* Replace with LineChart later */}
+            Line Chart Placeholder
+          </div>
+        </div>
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <h3 className="text-lg font-semibold mb-4">🟢 Active vs Inactive</h3>
+          <div className="h-64 flex items-center justify-center text-gray-400">
+            {/* Replace with DonutChart later */}
+            Donut Chart Placeholder
+          </div>
+        </div>
+      </div>
+
+      {/* Row 3: Upcoming Sessions + Top Tutors */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <h3 className="text-lg font-semibold mb-4">📅 Upcoming Sessions</h3>
+          <ul className="space-y-2 text-sm text-gray-700">
+            <li>Math - 3 PM with John Doe</li>
+            <li>Science - 5 PM with Jane Smith</li>
+            <li>English - 7 PM with Alex Brown</li>
+          </ul>
+        </div>
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <h3 className="text-lg font-semibold mb-4">⭐ Top Tutors</h3>
+          <ul className="space-y-2 text-sm text-gray-700">
+            <li>John Doe - 120 sessions</li>
+            <li>Jane Smith - 98 sessions</li>
+            <li>Alex Brown - 75 sessions</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Row 4: Alerts & Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <h3 className="text-lg font-semibold mb-4">⚠️ Alerts</h3>
+          <ul className="space-y-2 text-sm text-red-600">
+            <li>Pending tutor verification: 3</li>
+            <li>Unpaid invoices: 5</li>
+          </ul>
+        </div>
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <h3 className="text-lg font-semibold mb-4">⚡ Quick Actions</h3>
+          <div className="flex flex-wrap gap-3">
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
+              + Add Tutor
+            </button>
+            <button className="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">
+              + Add Student
+            </button>
+            <button className="px-4 py-2 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700">
+              + New Session
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  )
+  );
+}
+
+// Reusable Stat Card
+function Card({ title, value, color }) {
+  return (
+    <div className="bg-white shadow-md rounded-lg p-6 flex flex-col items-center">
+      <div
+        className={`w-12 h-12 rounded-full ${color} flex items-center justify-center text-white font-bold text-lg mb-3`}
+      >
+        {title[0]}
+      </div>
+      <h3 className="text-gray-600 text-sm font-medium">{title}</h3>
+      <p className="text-xl font-bold text-gray-900">{value}</p>
+    </div>
+  );
 }

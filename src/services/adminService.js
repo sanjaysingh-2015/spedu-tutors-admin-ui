@@ -32,8 +32,8 @@ export const searchMetricCategories = (param) => api.get(`/api/metric-categories
 export const getMetrics = () => api.get('/api/metrics')
 export const searchMetrics = (param) => api.get(`/api/metrics/search?${param}`)
 
-export const getGamification = () => api.get('/api/gamification-configs')
-export const searchGamification = (param) => api.get(`/api/gamification-configs/search?${param}`)
+export const getGamifications = () => api.get('/api/gamification-configs')
+export const searchGamifications = (param) => api.get(`/api/gamification-configs/search?${param}`)
 
 export const createRole = payload => api.post('/api/roles', payload)
 export const updateRole = (id, payload) => api.put(`/api/roles/${id}`, payload)
