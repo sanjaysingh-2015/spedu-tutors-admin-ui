@@ -26,8 +26,14 @@ export const searchTutorFeeStructures = (param) => api.get(`/api/tutor-fee-struc
 export const getLevels = () => api.get('api/levels')
 export const searchLevels = (param) => api.get(`api/levels/search?${param}`)
 
+export const getMetricCategories = () => api.get('/api/metric-categories')
+export const searchMetricCategories = (param) => api.get(`/api/metric-categories/search?${param}`)
+
+export const getMetrics = () => api.get('/api/metrics')
+export const searchMetrics = (param) => api.get(`/api/metrics/search?${param}`)
+
 export const getGamification = () => api.get('/api/gamification-configs')
-export const searchGamification = (param) => api.get(`/api/gamification-configs/search/${param}`)
+export const searchGamification = (param) => api.get(`/api/gamification-configs/search?${param}`)
 
 export const createRole = payload => api.post('/api/roles', payload)
 export const updateRole = (id, payload) => api.put(`/api/roles/${id}`, payload)
@@ -56,6 +62,14 @@ export const deleteTutorFeeStructure = id => api.delete(`/api/tutor-fee-structur
 export const createLevel = payload => api.post('/api/levels', payload)
 export const updateLevel = (id, payload) => api.put(`/api/levels/${id}`, payload)
 export const deleteLevel = id => api.delete(`/api/levels/${id}`)
+
+export const createMetricCategory = payload => api.post('/api/metric-categories', payload)
+export const updateMetricCategory = (id, payload) => api.put(`/api/metric-categories/${id}`, payload)
+export const deleteMetricCategory = id => api.delete(`/api/metric-categories/${id}`)
+
+export const createMetric = payload => api.post('/api/metrics', payload)
+export const updateMetric = (id, payload) => api.put(`/api/metrics/${id}`, payload)
+export const deleteMetric = id => api.delete(`/api/metrics/${id}`)
 
 export const createGamification = payload => api.post('/api/gamification-configs', payload)
 export const updateGamification = (id, payload) => api.put(`/api/gamification-configs/${id}`, payload)

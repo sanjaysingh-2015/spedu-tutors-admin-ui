@@ -11,6 +11,8 @@ import Levels from './pages/Levels'
 import Fees from './pages/Fees'
 import TutorFeeStructures from './pages/TutorFeeStructures'
 import Students from './pages/Students'
+import MetricCategories from './pages/MetricCategories'
+import Metrics from './pages/Metrics'
 import Gamification from './pages/Gamification'
 import Test from './pages/Test'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -34,6 +36,8 @@ export default function App(){
           <Route path="/tutor-fees" element={<ProtectedRoute><TutorFeeStructures/></ProtectedRoute>} />
           <Route path="/students" element={<ProtectedRoute><Students/></ProtectedRoute>} />
           <Route path="/fees" element={<ProtectedRoute><Fees/></ProtectedRoute>} />
+          <Route path="/metric-categories" element={<ProtectedRoute><MetricCategories/></ProtectedRoute>} />
+          <Route path="/metrics" element={<ProtectedRoute><Metrics/></ProtectedRoute>} />
           <Route path="/gamification" element={<ProtectedRoute><Gamification/></ProtectedRoute>} />
 
           <Route path="/test" element={<Test/>} />
