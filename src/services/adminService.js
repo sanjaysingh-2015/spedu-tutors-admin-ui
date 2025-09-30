@@ -18,7 +18,10 @@ export const getStudents = () => api.get('/api/students')
 export const searchStudents = (param) => api.get(`/api/students/search?${param}`)
 
 export const getFees = () => api.get('/api/fee-configs')
-export const searchFees = (param) => api.get(`/api/fee-configs/${param}`)
+export const searchFees = (param) => api.get(`/api/fee-configs/search?${param}`)
+
+export const getTutorFeeStructures = () => api.get('/api/tutor-fee-structures')
+export const searchTutorFeeStructures = (param) => api.get(`/api/tutor-fee-structures/search?${param}`)
 
 export const getLevels = () => api.get('api/levels')
 export const searchLevels = (param) => api.get(`api/levels/search?${param}`)
@@ -45,6 +48,10 @@ export const deleteStudent = id => api.delete(`/api/students/${id}`)
 export const createFee = payload => api.post('/api/fee-configs', payload)
 export const updateFee = (id, payload) => api.put(`/api/fee-configs/${id}`, payload)
 export const deleteFee = id => api.delete(`/api/fee-configs/${id}`)
+
+export const createTutorFeeStructure = payload => api.post('/api/tutor-fee-structures', payload)
+export const updateTutorFeeStructure = (id, payload) => api.put(`/api/tutor-fee-structures/${id}`, payload)
+export const deleteTutorFeeStructure = id => api.delete(`/api/tutor-fee-structures/${id}`)
 
 export const createLevel = payload => api.post('/api/levels', payload)
 export const updateLevel = (id, payload) => api.put(`/api/levels/${id}`, payload)

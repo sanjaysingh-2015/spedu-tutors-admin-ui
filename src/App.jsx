@@ -8,8 +8,9 @@ import Tutors from './pages/Tutors'
 import Users from './pages/Users'
 import Roles from './pages/Roles'
 import Levels from './pages/Levels'
-import Students from './pages/Students'
 import Fees from './pages/Fees'
+import TutorFeeStructures from './pages/TutorFeeStructures'
+import Students from './pages/Students'
 import Gamification from './pages/Gamification'
 import Test from './pages/Test'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -28,7 +29,9 @@ export default function App(){
           <Route path="/roles" element={<ProtectedRoute><Roles/></ProtectedRoute>} />
           <Route path="/users" element={<ProtectedRoute><Users/></ProtectedRoute>} />
           <Route path="/levels" element={<ProtectedRoute><Levels/></ProtectedRoute>} />
+          <Route path="/fees" element={<ProtectedRoute><Fees/></ProtectedRoute>} />
           <Route path="/tutors" element={<ProtectedRoute><Tutors/></ProtectedRoute>} />
+          <Route path="/tutor-fees" element={<ProtectedRoute><TutorFeeStructures/></ProtectedRoute>} />
           <Route path="/students" element={<ProtectedRoute><Students/></ProtectedRoute>} />
           <Route path="/fees" element={<ProtectedRoute><Fees/></ProtectedRoute>} />
           <Route path="/gamification" element={<ProtectedRoute><Gamification/></ProtectedRoute>} />

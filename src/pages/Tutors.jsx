@@ -19,6 +19,8 @@ import {
   ArrowDownOnSquareIcon,
   SparklesIcon,
   MagnifyingGlassIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon
 } from "@heroicons/react/24/outline";
 
 export default function Tutors() {
@@ -39,6 +41,11 @@ export default function Tutors() {
   })
   const [levels, setLevels] = useState([])
   const [users, setUsers] = useState([])
+
+  // pagination state
+  const [page, setPage] = useState(0) // backend usually starts from 0
+  const [size, setSize] = useState(10)
+  const [totalPages, setTotalPages] = useState(0)
 
   // 🔍 search form state
   const [searchForm, setSearchForm] = useState({
@@ -61,8 +68,7 @@ export default function Tutors() {
     getUsers().then(r => setUsers(r.data || []))
   }, [])
 
-  const load = () =>
-    getTutors().then(r => setTutors(r.data)).catch(() => {})
+  const load = () => handleSearch()
 
   // 🔍 search handler
   const handleSearch = async () => {
@@ -72,12 +78,15 @@ export default function Tutors() {
       middleName: searchForm.middleName || '',
       lastName: searchForm.lastName || '',
       levelCode: searchForm.levelCode || '',
-      status: searchForm.status || ''
+      status: searchForm.status || '',
+      page,
+      size
     })
     const res = await searchTutors(params)
-    if (res.ok) {
-      const data = await res.json()
-      setTutors(data)
+    if (res.status == 200) {
+      const data = await res.data
+      setTutors(data.content || [])
+      setTotalPages(data.totalPages || 0)
     }
   }
 
@@ -148,6 +157,14 @@ export default function Tutors() {
     if (!file) return
     const res = await uploadResume(file)
     setForm(f => ({ ...f, resumeUrl: res }))
+  }
+
+  // pagination controls
+  const nextPage = () => {
+    if (page < totalPages - 1) setPage(page + 1)
+  }
+  const prevPage = () => {
+    if (page > 0) setPage(page - 1)
   }
 
   return (
@@ -268,6 +285,28 @@ export default function Tutors() {
           </tbody>
         </table>
       </div>
+
+     {/* Pagination Controls */}
+        <div className="flex justify-between items-center mt-4">
+          <button
+            onClick={prevPage}
+            disabled={page === 0}
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+          >
+            <ChevronLeftIcon className="w-6 h-6" />
+          </button>
+          <span>
+            Page {page + 1} of {totalPages}
+          </span>
+          <button
+            onClick={nextPage}
+            disabled={page >= totalPages - 1}
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+          >
+            <ChevronRightIcon className="w-6 h-6" />
+          </button>
+        </div>
+
 
       {open && (
         <Modal

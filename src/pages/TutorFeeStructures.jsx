@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import {
-  getFees,
-  searchFees,
-  createFee,
-  updateFee,
-  deleteFee,
+  getTutorFeeStructures,
+  searchTutorFeeStructures,
+  createTutorFeeStructure,
+  updateTutorFeeStructure,
+  deleteTutorFeeStructure,
   extractSkills,
   getLevels,
-  getUsers,
+  getTutors,
   uploadResume
 } from '../services/adminService'
 import Modal from '../components/Modal'
@@ -28,14 +28,15 @@ export default function Fees() {
   const [open, setOpen] = useState(false)
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState({
-    feeStartBand: '',
-    feeEndBand: '',
-    effectiveDate: '',
-    expirationDate: '',
+    commissionRate: '',
+    tutorCode: '',
+    effectiveFrom: '',
+    effectiveTo: '',
     levelCode: '',
     status: ''
   })
   const [levels, setLevels] = useState([])
+  const [tutors, setTutors] = useState([])
 
   // pagination state
   const [page, setPage] = useState(0) // backend usually starts from 0
@@ -46,6 +47,7 @@ export default function Fees() {
   const [searchForm, setSearchForm] = useState({
     date: '',
     levelCode: '',
+    tutorCode: '',
     status: ''
   })
 
@@ -58,6 +60,7 @@ export default function Fees() {
   useEffect(() => {
     load()
     getLevels().then(r => setLevels(r.data || []))
+    getTutors().then(r => setTutors(r.data || []))
   }, [])
 
   const load = () => handleSearch()
@@ -67,17 +70,17 @@ export default function Fees() {
     const params = new URLSearchParams({
       date: searchForm.date || '',
       levelCode: searchForm.levelCode || '',
+      tutorCode: searchForm.tutorCode || '',
       status: searchForm.status || '',
       page,
       size
     })
-
-    const res = await searchFees(params)
+    const res = await searchTutorFeeStructures(params)
     if (res.status == 200) {
-      const data = await res.data
-      setFees(data.content || [])
-      setTotalPages(data.totalPages || 0)
-    }
+          const data = await res.data
+          setFees(data.content || [])
+          setTotalPages(data.totalPages || 0)
+        }
   }
 
   const formatDate = (dateString) => {
@@ -88,10 +91,10 @@ export default function Fees() {
   const openNew = () => {
     setEditing(null)
     setForm({
-      feeStartBand: '',
-      feeEndBand: '',
-      effectiveDate: '',
-      expirationDate: '',
+      commissionRate: '',
+      tutorCode: '',
+      effectiveFrom: '',
+      effectiveTo: '',
       levelCode: '',
       status: ''
     })
@@ -101,21 +104,21 @@ export default function Fees() {
   const openEdit = t => {
     setEditing(t)
     setForm({
-      levelCode: t.levelCode || '',
-      feeStartBand: t.feeStartBand || '',
-      feeEndBand: t.feeEndBand || '',
-      effectiveDate: t.effectiveDate || '',
-      expirationDate: t.expirationDate || '',
-      status: t.status || ''
+        effectiveFrom: searchForm.effectiveFrom || '',
+        commissionRate: searchForm.commissionRate || '',
+        effectiveTo: searchForm.effectiveTo || '',
+        levelCode: searchForm.levelCode || '',
+        tutorCode: searchForm.tutorCode || '',
+        status: searchForm.status || ''
     })
     setOpen(true)
   }
 
   const save = async () => {
     if (editing) {
-      await updateFee(editing.id, form)
+      await updateTutorFeeStructure(editing.id, form)
     } else {
-      await createFee(form)
+      await createTutorFeeStructure(form)
     }
     setOpen(false)
     load()
@@ -123,7 +126,7 @@ export default function Fees() {
 
   const remove = async id => {
     if (confirm('Delete?')) {
-      await deleteFee(id)
+      await deleteTutorFeeStructure(id)
       load()
     }
   }
@@ -171,6 +174,16 @@ export default function Fees() {
           value={searchForm.levelCode}
           onChange={e => setSearchForm({ ...searchForm, levelCode: e.target.value })}
         >
+          <option value="">All Tutors</option>
+          {tutors.map(l => (
+            <option key={l.code} value={l.code}>{l.firstName + l.lastName}</option>
+          ))}
+        </select>
+        <select
+          className="input w-40"
+          value={searchForm.tutorCode}
+          onChange={e => setSearchForm({ ...searchForm, tutorCode: e.target.value })}
+        >
           <option value="">All Levels</option>
           {levels.map(l => (
             <option key={l.code} value={l.code}>{l.name}</option>
@@ -205,9 +218,9 @@ export default function Fees() {
         <table className="table w-full">
           <thead className="bg-blue-100 text-blue-800  text-left">
             <tr>
+              <th>Tutor</th>
               <th>Level</th>
-              <th>Fee Start</th>
-              <th>Fee End</th>
+              <th>Commission Rate</th>
               <th>Effective From</th>
               <th>Expired On</th>
               <th>Status</th>
@@ -217,11 +230,11 @@ export default function Fees() {
           <tbody>
             {fees.map(t => (
               <tr key={t.id}>
+                <td>{t.tutorFirstName +" "+ t.tutorMiddleName +" "+ t.tutorLastName}</td>
                 <td>{t.levelName}</td>
-                <td>{t.feeStartBand}</td>
-                <td>{t.feeEndBand}</td>
-                <td>{t.effectiveDate}</td>
-                <td>{t.expirationDate}</td>
+                <td>{t.commissionRate}</td>
+                <td>{t.effectiveFrom}</td>
+                <td>{t.effectiveTo}</td>
                 <td>{statusLabels[t.status] || t.status}</td>
                 <td>
                   <div className="flex flex-row items-center space-x-2">
@@ -251,7 +264,7 @@ export default function Fees() {
           </tbody>
         </table>
       </div>
-      {/* Pagination Controls */}
+     {/* Pagination Controls */}
         <div className="flex justify-between items-center mt-4">
           <button
             onClick={prevPage}
@@ -283,6 +296,22 @@ export default function Fees() {
               <div>
                 <select
                   className="input"
+                  value={form.tutorCode}
+                  onChange={e =>
+                    setForm({ ...form, tutorCode: e.target.value })
+                  }
+                >
+                  <option value="">Select Tutor</option>
+                  {tutors.map(l => (
+                    <option key={l.code} value={l.code}>
+                      {l.firstName + l.lastName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <select
+                  className="input"
                   value={form.levelCode}
                   onChange={e =>
                     setForm({ ...form, levelCode: e.target.value })
@@ -300,20 +329,10 @@ export default function Fees() {
               <div>
                 <input
                   className="input"
-                  placeholder="Fee Start"
-                  value={form.feeStartBand}
+                  placeholder="Commission Rate"
+                  value={form.commissionRate}
                   onChange={e =>
-                    setForm({ ...form, feeStartBand: e.target.value })
-                  }
-                />
-              </div>
-              <div>
-                <input
-                  className="input"
-                  placeholder="Fee End"
-                  value={form.feeEndBand}
-                  onChange={e =>
-                    setForm({ ...form, feeEndBand: e.target.value })
+                    setForm({ ...form, commissionRate: e.target.value })
                   }
                 />
               </div>
@@ -322,9 +341,9 @@ export default function Fees() {
                   className="input"
                   type="date"
                   placeholder="Effective From"
-                  value={formatDate(form.effectiveDate)}
+                  value={formatDate(form.effectiveFrom)}
                   onChange={e =>
-                    setForm({ ...form, effectiveDate: e.target.value })
+                    setForm({ ...form, effectiveFrom: e.target.value })
                   }
                 />
               </div>

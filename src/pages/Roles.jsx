@@ -19,6 +19,8 @@ import {
   ArrowDownOnSquareIcon,
   SparklesIcon,
   MagnifyingGlassIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon
 } from "@heroicons/react/24/outline";
 
 export default function Roles() {
@@ -32,6 +34,11 @@ export default function Roles() {
   })
   const [levels, setLevels] = useState([])
   const [users, setUsers] = useState([])
+
+  // pagination state
+  const [page, setPage] = useState(0) // backend usually starts from 0
+  const [size, setSize] = useState(10)
+  const [totalPages, setTotalPages] = useState(0)
 
   // 🔍 search form state
   const [searchForm, setSearchForm] = useState({
@@ -50,20 +57,22 @@ export default function Roles() {
     load()
   }, [])
 
+  const load = () => handleSearch()
 
-  const load = () =>
-      getRoles().then(r => setRoles(r.data)).catch(() => {})
   // 🔍 search handler
   const handleSearch = async () => {
     const params = new URLSearchParams({
       code: searchForm.code || '',
       name: searchForm.name || '',
-      status: searchForm.status || ''
+      status: searchForm.status || '',
+      page,
+      size
     })
     const res = await searchRoles(params)
-    if (res.ok) {
-      const data = await res.json()
-      setRoles(data)
+    if (res.status == 200) {
+      const data = await res.data
+      setRoles(data.content || [])
+      setTotalPages(data.totalPages || 0)
     }
   }
 
@@ -115,6 +124,13 @@ export default function Roles() {
     }))
   }
 
+  // pagination controls
+  const nextPage = () => {
+    if (page < totalPages - 1) setPage(page + 1)
+  }
+  const prevPage = () => {
+    if (page > 0) setPage(page - 1)
+  }
 
   return (
     <div>
@@ -204,6 +220,27 @@ export default function Roles() {
           </tbody>
         </table>
       </div>
+
+     {/* Pagination Controls */}
+        <div className="flex justify-between items-center mt-4">
+          <button
+            onClick={prevPage}
+            disabled={page === 0}
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+          >
+            <ChevronLeftIcon className="w-6 h-6" />
+          </button>
+          <span>
+            Page {page + 1} of {totalPages}
+          </span>
+          <button
+            onClick={nextPage}
+            disabled={page >= totalPages - 1}
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+          >
+            <ChevronRightIcon className="w-6 h-6" />
+          </button>
+        </div>
 
       {open && (
         <Modal
