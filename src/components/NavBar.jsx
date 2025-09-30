@@ -11,7 +11,9 @@ import {
   TrophyIcon,
   AcademicCapIcon,
   CurrencyDollarIcon,
-  UserIcon
+  UserIcon,
+  Squares2X2Icon,
+  ChartBarIcon
 } from "@heroicons/react/24/outline";
 
 export default function NavBar() {
@@ -41,14 +43,26 @@ export default function NavBar() {
         {/* Hide navigation links on login page */}
         {!isLoginPage && (
           <>
-            <Link to="/roles" className="flex flex-col items-center justify-center px-2 text-sm text-gray-600">
-              <ShieldCheckIcon className="w-5 h-5" />
-              <span>Roles</span>
-            </Link>
-            <Link to="/users" className="flex flex-col items-center justify-center px-2 text-sm text-gray-600">
-              <UserGroupIcon className="w-5 h-5" />
-              <span>Users</span>
-            </Link>
+          <div className="px-4 py-4 bg-white border-l border-b border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-100 shadow-[-4px_4px_6px_rgba(0,0,0,0.1)]">
+            <div className="flex space-x-6 justify-center">
+              <Link
+                to="/roles"
+                className="flex flex-col items-center justify-center px-2 text-sm text-gray-600"
+              >
+                <ShieldCheckIcon className="w-5 h-5" />
+                <span>Roles</span>
+              </Link>
+              <Link
+                to="/users"
+                className="flex flex-col items-center justify-center px-2 text-sm text-gray-600"
+              >
+                <UserGroupIcon className="w-5 h-5" />
+                <span>Users</span>
+              </Link>
+            </div>
+          </div>
+          <div className="px-4 py-4 bg-white border-l border-b border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-100 shadow-[-4px_4px_6px_rgba(0,0,0,0.1)]">
+            <div className="flex space-x-6 justify-center">
             <Link to="/levels" className="flex flex-col items-center justify-center px-2 text-sm text-gray-600">
               <Bars3BottomLeftIcon className="w-5 h-5" />
               <span>Levels</span>
@@ -57,10 +71,26 @@ export default function NavBar() {
               <BanknotesIcon className="w-5 h-5" />
               <span>Fees</span>
             </Link>
+            </div>
+          </div>
+          <div className="px-4 py-4 bg-white border-l border-b border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-100 shadow-[-4px_4px_6px_rgba(0,0,0,0.1)]">
+            <div className="flex space-x-6 justify-center">
+            <Link to="/metric-categories" className="flex flex-col items-center justify-center px-2 text-sm text-gray-600">
+              <Squares2X2Icon className="w-5 h-5" />
+              <span>Matric Category</span>
+            </Link>
+            <Link to="/metrics" className="flex flex-col items-center justify-center px-2 text-sm text-gray-600">
+              <ChartBarIcon className="w-5 h-5" />
+              <span>Matric</span>
+            </Link>
             <Link to="/gamification" className="flex flex-col items-center justify-center px-2 text-sm text-gray-600">
               <TrophyIcon className="w-5 h-5" />
               <span>Gamification</span>
             </Link>
+            </div>
+          </div>
+          <div className="px-4 py-4 bg-white border-l border-b border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-100 shadow-[-4px_4px_6px_rgba(0,0,0,0.1)]">
+            <div className="flex space-x-6 justify-center">
             <Link to="/tutors" className="flex flex-col items-center justify-center px-2 text-sm text-gray-600">
               <AcademicCapIcon className="w-5 h-5" />
               <span>Tutors</span>
@@ -69,10 +99,16 @@ export default function NavBar() {
               <CurrencyDollarIcon className="w-5 h-5" />
               <span>Tutor Fees</span>
             </Link>
+            </div>
+          </div>
+          <div className="px-4 py-4 bg-white border-l border-b border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-100 shadow-[-4px_4px_6px_rgba(0,0,0,0.1)]">
+            <div className="flex space-x-6 justify-center">
             <Link to="/students" className="flex flex-col items-center justify-center px-2 text-sm text-gray-600">
               <UserIcon className="w-5 h-5" />
               <span>Students</span>
             </Link>
+            </div>
+          </div>
           </>
         )}
       </div>
