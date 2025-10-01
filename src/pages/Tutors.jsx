@@ -53,6 +53,7 @@ export default function Tutors() {
     firstName: '',
     lastName: '',
     levelCode: '',
+    profileStatus: '',
     status: ''
   })
 
@@ -60,6 +61,13 @@ export default function Tutors() {
     ACTIVE: "Active",
     INACTIVE: "Inactive",
     DELETED: "Deleted"
+  };
+
+  const profileStatusLabels = {
+    INITIATE: "Initiate",
+    PENDING_APPROVAL: "Pending",
+    APPROVED: "Approved",
+    REJECTED: "Rejected"
   };
 
   useEffect(() => {
@@ -78,6 +86,7 @@ export default function Tutors() {
       middleName: searchForm.middleName || '',
       lastName: searchForm.lastName || '',
       levelCode: searchForm.levelCode || '',
+      profileStatus: searchForm.profileStatus || '',
       status: searchForm.status || '',
       page,
       size
@@ -219,6 +228,17 @@ export default function Tutors() {
         </select>
         <select
           className="input w-40"
+          value={searchForm.profileStatus}
+          onChange={e => setSearchForm({ ...searchForm, profileStatus: e.target.value })}
+        >
+          <option value="">All Profile Status</option>
+          <option key="INITIATE" value="INITIATE">Initiate</option>
+          <option key="PENDING_APPROVAL" value="PENDING_APPROVAL">Pending Approval</option>
+          <option key="APPROVED" value="APPROVED">Approved</option>
+          <option key="REJECTED" value="REJECTED">Rejected</option>
+        </select>
+        <select
+          className="input w-40"
           value={searchForm.status}
           onChange={e => setSearchForm({ ...searchForm, status: e.target.value })}
         >
@@ -244,6 +264,7 @@ export default function Tutors() {
               <th>Email</th>
               <th>Skills</th>
               <th>Level</th>
+              <th>Profile Status</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -256,6 +277,7 @@ export default function Tutors() {
                 <td>{t.userEmail}</td>
                 <td>{t.skills}</td>
                 <td>{t.levelName}</td>
+                <td>{profileStatusLabels[t.profileStatus] || t.profileStatus}</td>
                 <td>{statusLabels[t.status] || t.status}</td>
                 <td>
                   <div className="flex flex-row items-center space-x-2">

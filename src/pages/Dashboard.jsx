@@ -1,37 +1,37 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getDashboard } from '../services/adminService'
 export default function Dashboard() {
-  const [view, setView] = useState("weekly");
+  const navigate = useNavigate();
+  const [view, setView] = useState("today");
+  const [stats, setStats] = useState({})
 
-  // Example mock data (replace with API calls later)
-  const stats = {
-    today: {
-      tutors: 2,
-      students: 20,
-      sessions: 45,
-      revenue: "₹15,000",
-    },
-    weekly: {
-      tutors: 15,
-      students: 120,
-      sessions: 85,
-      revenue: "₹45,000",
-    },
-    monthly: {
-      tutors: 45,
-      students: 450,
-      sessions: 360,
-      revenue: "₹1,80,000",
-    },
-    yearly: {
-      tutors: 236,
-      students: 4378,
-      sessions: 4582,
-      revenue: "₹14,80,697",
-    },
+  useEffect(() => { 
+      async function fetchData() { 
+          try { 
+              const res = await getDashboard(); 
+              setStats(res.data || {}); 
+          } catch (err) { 
+              console.error("Error fetching dashboard:", err); 
+          } 
+      } 
+      fetchData(); 
+  }, []); 
+
+  const data = stats[view] || {
+      tutors: 0, 
+      students: 0, 
+      sessions: 0, 
+      amount: 0, 
   };
 
-  const data = stats[view];
+  const formattedRevenue =
+    `₹${Number(data.amount || 0).toLocaleString("en-IN",
+        {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        }
+    )}`;
 
   return (
     <div className="p-6 space-y-8">
@@ -62,7 +62,7 @@ export default function Dashboard() {
         <Card title="Tutors" value={data.tutors} color="bg-indigo-500" />
         <Card title="Students" value={data.students} color="bg-green-500" />
         <Card title="Sessions" value={data.sessions} color="bg-purple-500" />
-        <Card title="Revenue" value={data.revenue} color="bg-yellow-500" />
+        <Card title="Revenue" value={formattedRevenue} color="bg-yellow-500" />
       </div>
 
       {/* Row 2: Charts */}
@@ -115,13 +115,13 @@ export default function Dashboard() {
         <div className="bg-white shadow-md rounded-lg p-6">
           <h3 className="text-lg font-semibold mb-4">⚡ Quick Actions</h3>
           <div className="flex flex-wrap gap-3">
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
+            <button onClick={() => navigate("/tutors")} className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
               + Add Tutor
             </button>
-            <button className="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">
+            <button onClick={() => navigate("/student")} className="px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700">
               + Add Student
             </button>
-            <button className="px-4 py-2 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700">
+            <button onClick={() => navigate("/tutors")} className="px-4 py-2 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700">
               + New Session
             </button>
           </div>

@@ -28,6 +28,8 @@ export default function Fees() {
   const [open, setOpen] = useState(false)
   const [editing, setEditing] = useState(null)
   const [form, setForm] = useState({
+    periodType: '',
+    amount: '',
     commissionRate: '',
     tutorCode: '',
     effectiveFrom: '',
@@ -45,6 +47,7 @@ export default function Fees() {
 
   // 🔍 search form state
   const [searchForm, setSearchForm] = useState({
+    periodType: '',
     date: '',
     levelCode: '',
     tutorCode: '',
@@ -68,6 +71,7 @@ export default function Fees() {
   // 🔍 search handler
   const handleSearch = async () => {
     const params = new URLSearchParams({
+      periodType: searchForm.periodType || '',
       date: searchForm.date || '',
       levelCode: searchForm.levelCode || '',
       tutorCode: searchForm.tutorCode || '',
@@ -91,6 +95,8 @@ export default function Fees() {
   const openNew = () => {
     setEditing(null)
     setForm({
+      periodType: '',
+      amount: '',
       commissionRate: '',
       tutorCode: '',
       effectiveFrom: '',
@@ -104,12 +110,14 @@ export default function Fees() {
   const openEdit = t => {
     setEditing(t)
     setForm({
-        effectiveFrom: searchForm.effectiveFrom || '',
-        commissionRate: searchForm.commissionRate || '',
-        effectiveTo: searchForm.effectiveTo || '',
-        levelCode: searchForm.levelCode || '',
-        tutorCode: searchForm.tutorCode || '',
-        status: searchForm.status || ''
+        periodType: form.periodType || '',
+        amount: form.amount || '',
+        effectiveFrom: form.effectiveFrom || '',
+        commissionRate: form.commissionRate || '',
+        effectiveTo: form.effectiveTo || '',
+        levelCode: form.levelCode || '',
+        tutorCode: form.tutorCode || '',
+        status: form.status || ''
     })
     setOpen(true)
   }
@@ -198,6 +206,17 @@ export default function Fees() {
         />
         <select
           className="input w-40"
+          value={searchForm.periodType}
+          onChange={e => setSearchForm({ ...searchForm, periodType: e.target.value })}
+        >
+          <option value="">All Period</option>
+          <option key="HOURLY" value="HOURLY">Hourly</option>
+          <option key="SESSION" value="SESSION">Session</option>
+          <option key="DAILY" value="DAILY">Daily</option>
+          <option key="SUBJECT" value="SUBJECT">Subject</option>
+        </select>
+        <select
+          className="input w-40"
           value={searchForm.status}
           onChange={e => setSearchForm({ ...searchForm, status: e.target.value })}
         >
@@ -220,6 +239,8 @@ export default function Fees() {
             <tr>
               <th>Tutor</th>
               <th>Level</th>
+              <th>Period Type</th>
+              <th>Amount</th>
               <th>Commission Rate</th>
               <th>Effective From</th>
               <th>Expired On</th>
@@ -232,6 +253,8 @@ export default function Fees() {
               <tr key={t.id}>
                 <td>{t.tutorFirstName +" "+ t.tutorMiddleName +" "+ t.tutorLastName}</td>
                 <td>{t.levelName}</td>
+                <td>{t.periodType}</td>
+                <td>{t.amount}</td>
                 <td>{t.commissionRate}</td>
                 <td>{t.effectiveFrom}</td>
                 <td>{t.effectiveTo}</td>
@@ -325,7 +348,30 @@ export default function Fees() {
                   ))}
                 </select>
               </div>
+              <div>
+                  <select
+                    className="input w-40"
+                    value={searchForm.periodType}
+                    onChange={e => setForm({ ...form, periodType: e.target.value })}
+                  >
+                    <option value="">All Period</option>
+                    <option key="HOURLY" value="HOURLY">Hourly</option>
+                    <option key="SESSION" value="SESSION">Session</option>
+                    <option key="DAILY" value="DAILY">Daily</option>
+                    <option key="SUBJECT" value="SUBJECT">Subject</option>
+                  </select>
 
+              </div>
+              <div>
+                <input
+                  className="input"
+                  placeholder="Amount"
+                  value={form.amount}
+                  onChange={e =>
+                    setForm({ ...form, amount: e.target.value })
+                  }
+                />
+              </div>
               <div>
                 <input
                   className="input"

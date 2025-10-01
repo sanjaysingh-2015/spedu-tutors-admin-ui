@@ -3,7 +3,7 @@ import api from './api'
 
 const API_BASE = import.meta.env.VITE_ADMIN_API_BASE_URL || ''
 
-export const getDashboard = () => api.get('/api/admin/dashboard')
+export const getDashboard = () => api.get('/api/dashboard/stats-data')
 
 export const getRoles = () => api.get('/api/roles')
 export const searchRoles = (param) => api.get(`/api/roles/search?${param}`)
