@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Tutors from './pages/Tutors'
+import TutorApprovals from './pages/TutorApprovals'
 import Users from './pages/Users'
 import Roles from './pages/Roles'
 import Levels from './pages/Levels'
@@ -39,7 +40,7 @@ export default function App(){
           <Route path="/metric-categories" element={<ProtectedRoute><MetricCategories/></ProtectedRoute>} />
           <Route path="/metrics" element={<ProtectedRoute><Metrics/></ProtectedRoute>} />
           <Route path="/gamification" element={<ProtectedRoute><Gamification/></ProtectedRoute>} />
-
+          <Route path="/tutor-approval" element={<ProtectedRoute><TutorApprovals/></ProtectedRoute>} />
           <Route path="/test" element={<Test/>} />
         </Routes>
       </div>

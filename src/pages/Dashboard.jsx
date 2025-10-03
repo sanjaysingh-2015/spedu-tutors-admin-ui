@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { getDashboard } from '../services/adminService'
+import { Link, useNavigate } from "react-router-dom";
+import { getDashboard, getDashboardQuickActions } from '../services/adminService'
 export default function Dashboard() {
   const navigate = useNavigate();
   const [view, setView] = useState("today");
   const [stats, setStats] = useState({})
+  const [quickActions, setQuickActions] = useState({})
 
   useEffect(() => { 
       async function fetchData() { 
@@ -12,8 +13,14 @@ export default function Dashboard() {
               const res = await getDashboard(); 
               setStats(res.data || {}); 
           } catch (err) { 
-              console.error("Error fetching dashboard:", err); 
-          } 
+              console.error("Error fetching Stats Data:", err);
+          }
+          try {
+            const res = await getDashboardQuickActions();
+            setQuickActions(res.data || {});
+          } catch (err) {
+            console.error("Error fetching Quick Actions:", err);
+          }
       } 
       fetchData(); 
   }, []); 
@@ -25,6 +32,11 @@ export default function Dashboard() {
       amount: 0, 
   };
 
+  const quickActionData = quickActions || {
+    pendingTutors: 0,
+    incompletePayments: 0,
+    incompleteRefunds: 0,
+  }
   const formattedRevenue =
     `₹${Number(data.amount || 0).toLocaleString("en-IN",
         {
@@ -108,8 +120,27 @@ export default function Dashboard() {
         <div className="bg-white shadow-md rounded-lg p-6">
           <h3 className="text-lg font-semibold mb-4">⚠️ Alerts</h3>
           <ul className="space-y-2 text-sm text-red-600">
-            <li>Pending tutor verification: 3</li>
-            <li>Unpaid invoices: 5</li>
+            <li>
+              <Link
+                to="/tutor-approval"
+                className="text-blue-600 hover:underline">
+                  Pending tutor approval: {quickActionData.pendingTutors}
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/tutor-approval"
+                className="text-blue-600 hover:underline">
+                  Incomplete payments: {quickActionData.incompletePayments}
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/tutor-approval"
+                className="text-blue-600 hover:underline">
+                  Incomplete refunds: {quickActionData.incompleteRefunds}
+              </Link>
+            </li>
           </ul>
         </div>
         <div className="bg-white shadow-md rounded-lg p-6">

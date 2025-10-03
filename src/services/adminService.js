@@ -4,6 +4,7 @@ import api from './api'
 const API_BASE = import.meta.env.VITE_ADMIN_API_BASE_URL || ''
 
 export const getDashboard = () => api.get('/api/dashboard/stats-data')
+export const getDashboardQuickActions = () => api.get('/api/dashboard/quick-actions')
 
 export const getRoles = () => api.get('/api/roles')
 export const searchRoles = (param) => api.get(`/api/roles/search?${param}`)
@@ -46,6 +47,7 @@ export const deleteUser = id => api.delete(`/api/users/${id}`)
 export const createTutor = payload => api.post('/api/tutors', payload)
 export const updateTutor = (id, payload) => api.put(`/api/tutors/${id}`, payload)
 export const deleteTutor = id => api.delete(`/api/tutors/${id}`)
+export const approveRejectTutor = (id, status) => api.put(`api/tutors/${id}/approve/${status}`)
 
 export const createStudent = payload => api.post('/api/students', payload)
 export const updateStudent = (id, payload) => api.put(`/api/students/${id}`, payload)

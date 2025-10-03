@@ -22,10 +22,10 @@ export default function NavBar() {
   const loginAt = localStorage.getItem("loginAt");
   const loggedInUser = localStorage.getItem("loggedInUser");
   const initials = loggedInUser
-          .split(" ")
-          .map(word => word[0].toUpperCase())
-          .slice(0, 2)
-          .join("");
+       ?.split(" ")
+       .map(word => word[0]?.toUpperCase())
+       .slice(0, 2)
+       .join("") || "";
   const navigate = useNavigate();
   const location = useLocation();
 
