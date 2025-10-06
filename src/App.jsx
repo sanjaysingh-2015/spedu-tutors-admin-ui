@@ -15,6 +15,10 @@ import Students from './pages/Students'
 import MetricCategories from './pages/MetricCategories'
 import Metrics from './pages/Metrics'
 import Gamification from './pages/Gamification'
+import DocumentCategories from './pages/DocumentCategories'
+import Documents from './pages/Documents'
+import TutorDocuments from './pages/TutorDocuments'
+import TutorAddresses from './pages/TutorAddresses'
 import Test from './pages/Test'
 import ProtectedRoute from './components/ProtectedRoute'
 
@@ -41,6 +45,10 @@ export default function App(){
           <Route path="/metrics" element={<ProtectedRoute><Metrics/></ProtectedRoute>} />
           <Route path="/gamification" element={<ProtectedRoute><Gamification/></ProtectedRoute>} />
           <Route path="/tutor-approval" element={<ProtectedRoute><TutorApprovals/></ProtectedRoute>} />
+          <Route path="/document-categories" element={<ProtectedRoute><DocumentCategories/></ProtectedRoute>} />
+          <Route path="/documents" element={<ProtectedRoute><Documents/></ProtectedRoute>} />
+          <Route path="/tutor-documents" element={<ProtectedRoute><TutorDocuments/></ProtectedRoute>} />
+          <Route path="/tutor-addresses" element={<ProtectedRoute><TutorAddresses/></ProtectedRoute>} />
           <Route path="/test" element={<Test/>} />
         </Routes>
       </div>

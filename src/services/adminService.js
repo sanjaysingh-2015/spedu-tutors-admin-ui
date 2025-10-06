@@ -6,6 +6,9 @@ const API_BASE = import.meta.env.VITE_ADMIN_API_BASE_URL || ''
 export const getDashboard = () => api.get('/api/dashboard/stats-data')
 export const getDashboardQuickActions = () => api.get('/api/dashboard/quick-actions')
 
+export const getCountries = () => api.get('/api/countries')
+export const searchCountries = (param) => api.get(`/api/countries/search?${param}`)
+
 export const getRoles = () => api.get('/api/roles')
 export const searchRoles = (param) => api.get(`/api/roles/search?${param}`)
 
@@ -21,8 +24,20 @@ export const searchStudents = (param) => api.get(`/api/students/search?${param}`
 export const getFees = () => api.get('/api/fee-configs')
 export const searchFees = (param) => api.get(`/api/fee-configs/search?${param}`)
 
+export const getDocumentCategories = () => api.get('/api/document-categories')
+export const searchDocumentCategories = (param) => api.get(`/api/document-categories/search?${param}`)
+
+export const getDocuments = () => api.get('/api/documents')
+export const searchDocuments = (param) => api.get(`/api/documents/search?${param}`)
+
 export const getTutorFeeStructures = () => api.get('/api/tutor-fee-structures')
 export const searchTutorFeeStructures = (param) => api.get(`/api/tutor-fee-structures/search?${param}`)
+
+export const getTutorDocuments = () => api.get('/api/tutor-documents')
+export const searchTutorDocuments = (param) => api.get(`/api/tutor-documents/search?${param}`)
+
+export const getTutorAddresses = () => api.get('/api/tutor-addresses')
+export const searchTutorAddresses = (param) => api.get(`/api/tutor-addresses/search?${param}`)
 
 export const getLevels = () => api.get('api/levels')
 export const searchLevels = (param) => api.get(`api/levels/search?${param}`)
@@ -57,9 +72,25 @@ export const createFee = payload => api.post('/api/fee-configs', payload)
 export const updateFee = (id, payload) => api.put(`/api/fee-configs/${id}`, payload)
 export const deleteFee = id => api.delete(`/api/fee-configs/${id}`)
 
+export const createDocumentCategory = (payload) => api.post('/api/document-categories', payload)
+export const updateDocumentCategory = (id, payload) => api.put(`/api/document-categories/${id}`, payload)
+export const deleteDocumentCategory = id => api.delete(`/api/document-categories/${id}`)
+
+export const createDocument = (payload) => api.post('/api/documents', payload)
+export const updateDocument = (id, payload) => api.put(`/api/documents/${id}`, payload)
+export const deleteDocument = id => api.delete(`/api/documents/${id}`)
+
 export const createTutorFeeStructure = payload => api.post('/api/tutor-fee-structures', payload)
 export const updateTutorFeeStructure = (id, payload) => api.put(`/api/tutor-fee-structures/${id}`, payload)
 export const deleteTutorFeeStructure = id => api.delete(`/api/tutor-fee-structures/${id}`)
+
+export const createTutorDocument = payload => api.post('/api/tutor-documents', payload)
+export const updateTutorDocument = (id, payload) => api.put(`/api/tutor-documents/${id}`, payload)
+export const deleteTutorDocument = id => api.delete(`/api/tutor-documents/${id}`)
+
+export const createTutorAddress = payload => api.post('/api/tutor-addresses', payload)
+export const updateTutorAddress = (id, payload) => api.put(`/api/tutor-addresses/${id}`, payload)
+export const deleteTutorAddress = id => api.delete(`/api/tutor-addresses/${id}`)
 
 export const createLevel = payload => api.post('/api/levels', payload)
 export const updateLevel = (id, payload) => api.put(`/api/levels/${id}`, payload)
