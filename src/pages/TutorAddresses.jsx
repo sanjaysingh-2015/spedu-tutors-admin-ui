@@ -125,6 +125,7 @@ export default function TutorAddresses() {
       state: t.state || '',
       countryCode: t.countryCode || '',
       zipCode: t.zipCode || '',
+      correspondingAddress: t.correspondingAddress || '',
       status: t.status || ''
     })
     setOpen(true)

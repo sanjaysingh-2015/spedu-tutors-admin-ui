@@ -35,6 +35,9 @@ export default function NavBar() {
 
   const handleLogout = () => {
     localStorage.removeItem("spedu_token");
+    localStorage.removeItem('loggedInUser')
+    localStorage.removeItem('userRole')
+    localStorage.removeItem('loginAt')
     navigate("/login");
   };
 
@@ -157,31 +160,22 @@ export default function NavBar() {
 
       {/* Right Section - Logout + Profile */}
       <div className="flex items-center space-x-4">
-        {/* Logout */}
-        {!isLoginPage && token && (
-          <div className="px-3 py-3 bg-white border-l border-b border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-100 shadow-[-3px_3px_5px_rgba(0,0,0,0.1)]">
-            <div className="flex space-x-5 justify-center">
-              <button
-                onClick={handleLogout}
-                className="flex flex-col items-center justify-center px-2 text-xs text-red-600 hover:text-red-800"
-              >
-                <ArrowRightOnRectangleIcon className="w-4 h-4" />
-                <span>Logout</span>
-              </button>
-            </div>
-          </div>
-        )}
-
         {/* Profile Info */}
         {!isLoginPage && token ? (
-          <div className="flex flex-col items-center space-y-0.5">
-            <span className="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold text-xs">
-              {initials}
-            </span>
-            <span className="text-[0.8rem] text-blue-700 text-center">{loggedInUser}</span>
-            <span className="text-[0.65rem] text-orange-800 text-center">As {userRole}</span>
-            <span className="text-[0.5rem] text-green-800 text-center">Login: {loginAt}</span>
-          </div>
+          <button
+            onClick={handleLogout}
+            title="Logout"
+            className="flex flex-col items-center space-y-1 focus:outline-none hover:opacity-80 transition"
+          >
+            <div className="flex flex-col items-center space-y-0.5">
+              <span className="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold text-xs">
+                {initials}
+              </span>
+              <span className="text-[0.8rem] text-blue-700 text-center">{loggedInUser}</span>
+              <span className="text-[0.65rem] text-orange-800 text-center">As {userRole}</span>
+              <span className="text-[0.5rem] text-green-800 text-center">Login: {loginAt}</span>
+            </div>
+          </button>
         ) : (
           !isLoginPage && (
             <Link
