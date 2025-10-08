@@ -110,14 +110,14 @@ export default function Fees() {
   const openEdit = t => {
     setEditing(t)
     setForm({
-        periodType: form.periodType || '',
-        amount: form.amount || '',
-        effectiveFrom: form.effectiveFrom || '',
-        commissionRate: form.commissionRate || '',
-        effectiveTo: form.effectiveTo || '',
-        levelCode: form.levelCode || '',
-        tutorCode: form.tutorCode || '',
-        status: form.status || ''
+        periodType: t.periodType || '',
+        amount: t.amount || '',
+        effectiveFrom: t.effectiveFrom || '',
+        commissionRate: t.commissionRate || '',
+        effectiveTo: t.effectiveTo || '',
+        levelCode: t.levelCode || '',
+        tutorCode: t.tutorCode || '',
+        status: t.status || ''
     })
     setOpen(true)
   }
