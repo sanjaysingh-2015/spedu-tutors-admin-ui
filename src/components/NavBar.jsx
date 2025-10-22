@@ -16,7 +16,8 @@ import {
   ChartBarIcon,
   DocumentTextIcon,
   ClipboardDocumentIcon,
-  MapPinIcon
+  MapPinIcon,
+  BookOpenIcon
 } from "@heroicons/react/24/outline";
 
 export default function NavBar() {
@@ -87,6 +88,10 @@ export default function NavBar() {
                 <Link to="/fees" className="flex flex-col items-center justify-center px-1.5 text-xs text-gray-600">
                   <BanknotesIcon className="w-4 h-4" />
                   <span>Fees</span>
+                </Link>
+                <Link to="/subjects" className="flex flex-col items-center justify-center px-1.5 text-xs text-gray-600">
+                  <BookOpenIcon className="w-4 h-4" />
+                  <span>Subjects</span>
                 </Link>
               </div>
             </div>

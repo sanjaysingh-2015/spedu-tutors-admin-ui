@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard'
 import Tutors from './pages/Tutors'
 import TutorApprovals from './pages/TutorApprovals'
 import Users from './pages/Users'
+import Subjects from './pages/Subjects'
 import Roles from './pages/Roles'
 import Levels from './pages/Levels'
 import Fees from './pages/Fees'
@@ -49,6 +50,7 @@ export default function App(){
           <Route path="/documents" element={<ProtectedRoute><Documents/></ProtectedRoute>} />
           <Route path="/tutor-documents" element={<ProtectedRoute><TutorDocuments/></ProtectedRoute>} />
           <Route path="/tutor-addresses" element={<ProtectedRoute><TutorAddresses/></ProtectedRoute>} />
+          <Route path="/subjects" element={<ProtectedRoute><Subjects/></ProtectedRoute>} />
           <Route path="/test" element={<Test/>} />
         </Routes>
       </div>

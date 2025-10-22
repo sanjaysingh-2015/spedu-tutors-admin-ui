@@ -15,6 +15,9 @@ export const searchRoles = (param) => api.get(`/api/roles/search?${param}`)
 export const getUsers = () => api.get('/api/users')
 export const searchUsers = (param) => api.get(`/api/users/search?${param}`)
 
+export const getSubjects = () => api.get('/api/subjects')
+export const searchSubjects = (param) => api.get(`/api/subjects/search?${param}`)
+
 export const getTutors = () => api.get('/api/tutors')
 export const searchTutors = (param) => api.get(`/api/tutors/search?${param}`)
 
@@ -58,6 +61,10 @@ export const deleteRole = id => api.delete(`/api/roles/${id}`)
 export const createUser = payload => api.post('/api/users', payload)
 export const updateUser = (id, payload) => api.put(`/api/users/${id}`, payload)
 export const deleteUser = id => api.delete(`/api/users/${id}`)
+
+export const createSubject = payload => api.post('/api/subjects', payload)
+export const updateSubject = (id, payload) => api.put(`/api/subjects/${id}`, payload)
+export const deleteSubject = id => api.delete(`/api/subjects/${id}`)
 
 export const createTutor = payload => api.post('/api/tutors', payload)
 export const updateTutor = (id, payload) => api.put(`/api/tutors/${id}`, payload)
